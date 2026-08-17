@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from "react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import type { OnboardingStackParamList } from "./types";
 import FamilySelectorScreen from "../screens/onboarding/FamilySelectorScreen";
 import CreateFamilyScreen from "../screens/onboarding/CreateFamilyScreen";

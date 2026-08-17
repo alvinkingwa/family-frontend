@@ -5,7 +5,7 @@ import HomeScreen from "../screens/home/HomeScreen";
 import FamilyTreeScreen from "../screens/tree/FamilyTreeScreen";
 import MembersListScreen from "../screens/members/MembersListScreen";
 import MyProfileScreen from "../screens/profile/MyProfileScreen";
-import { Ionicons } from "expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 
 const Tab = createBottomTabNavigator<AppTabParamList>();
