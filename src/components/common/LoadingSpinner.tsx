@@ -1,5 +1,5 @@
 import { View, ActivityIndicator, Text } from "react-native";
-import { colors } from "@/constants";
+import { colors } from "../../constants";
 
 interface LoadingSpinnerProps {
   message?: string;
