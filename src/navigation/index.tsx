@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { View, ActivityIndicator } from "react-native";
 import { useAuthStore, useFamilyStore } from "../store";
 import AuthNavigator from "./AuthNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import AppNavigator from "./AppNavigator";
-import { View, ActivityIndicator } from "react-native";
 import { colors } from "../constants";
 
 export default function Navigation() {
@@ -18,16 +18,18 @@ export default function Navigation() {
     );
   }
 
+  // not logged in, email not verified, or no profile yet → stay in auth screens
+  const showAuth = !isLoggedIn || !emailVerified || !hasProfile;
+
   return (
     <NavigationContainer>
-      {/* not logged in → auth screens */}
-      {!isLoggedIn && <AuthNavigator />}
-
-      {/* logged in but no family selected → onboarding */}
-      {isLoggedIn && !currentFamily && <OnboardingNavigator />}
-
-      {/* logged in + family selected → main app */}
-      {isLoggedIn && currentFamily && <AppNavigator />}
+      {showAuth ? (
+        <AuthNavigator />
+      ) : !currentFamily ? (
+        <OnboardingNavigator />
+      ) : (
+        <AppNavigator />
+      )}
     </NavigationContainer>
   );
 }

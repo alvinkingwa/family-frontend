@@ -13,18 +13,26 @@ import type {
 
 export const authService = {
   // step 1 — create account
-  async signup(data: SignupRequest): Promise<AuthResponse> {
+async signup(data: SignupRequest): Promise<AuthResponse> {
     const res = await api.post<AuthResponse>(ENDPOINTS.SIGNUP, data);
-    // save pre-family token
-    await storage.setPreFamilyToken(res.data.token);
-    await storage.setUserId(res.data.user_id);
+    
+    const token = String(res.data.token ?? "");
+    const userId = String(res.data.user_id ?? "");
+    
+    await storage.setPreFamilyToken(token);
+    await storage.setUserId(userId);
+    
     return res.data;
-  },
-
+},
   // verify email with 6-digit code
-  async verifyEmail(data: VerifyEmailRequest): Promise<void> {
-    await api.post(ENDPOINTS.VERIFY_EMAIL, data);
-  },
+ async verifyEmail(data: VerifyEmailRequest): Promise<void> {
+  const token = await storage.getPreFamilyToken();
+  await api.post(
+    ENDPOINTS.VERIFY_EMAIL,
+    { code: data.code },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+},
 
   // step 2 — complete profile after signup
   async completeProfile(data: CompleteProfileRequest): Promise<void> {

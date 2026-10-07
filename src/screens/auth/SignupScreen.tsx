@@ -38,6 +38,9 @@ export default function SignupScreen({ navigation }: Props) {
       setLoading(true);
       setError("");
       const response = await authService.signup(data);
+
+            console.log("Signup response:", JSON.stringify(response));
+
       await setAuthResponse(response);
       // navigate to verify email
       navigation.navigate("VerifyEmail", {
@@ -129,6 +132,19 @@ export default function SignupScreen({ navigation }: Props) {
             title="Create account"
             onPress={handleSubmit(onSubmit)}
             loading={loading}
+          />
+                    {/* divider */}
+          <View className="flex-row items-center my-6">
+            <View className="flex-1 h-px bg-border" />
+            <Text className="text-text-muted text-sm mx-4">or</Text>
+            <View className="flex-1 h-px bg-border" />
+          </View>
+
+          {/* google sign up */}
+          <Button
+            title="Continue with Google"
+            onPress={() => {}}
+            variant="outline"
           />
 
           {/* login link */}

@@ -4,10 +4,10 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useAuthStore } from "@/store/auth.store";
-import { useFamilyStore } from "@/store/family.store";
-import { Avatar, Badge, Card } from "@/components/common";
-import { formatDate } from "@/utils/date";
+import { useAuthStore } from "../../store";
+import { useFamilyStore } from "../../store";
+import { Avatar,Badge,Card } from "../../components/common";
+import { formatDate } from "../../utils";
 
 export default function MyProfileScreen() {
   const { profile, logout } = useAuthStore();

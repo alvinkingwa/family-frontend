@@ -50,6 +50,7 @@ export default function CompleteProfileScreen({ navigation }: Props) {
       setLoading(true);
       setError("");
       await authService.completeProfile(data);
+       setProfile(true);
       // profile complete — navigation will redirect to onboarding
     } catch (err: any) {
       setError(err.message ?? "Failed to save profile. Please try again.");
@@ -173,13 +174,22 @@ export default function CompleteProfileScreen({ navigation }: Props) {
             ) : null}
           </View>
 
-          {/* submit */}
+                  {/* submit */}
           <View className="mt-4">
             <Button
               title="Save profile"
               onPress={handleSubmit(onSubmit)}
               loading={loading}
             />
+
+            <TouchableOpacity
+              className="mt-4 items-center"
+              onPress={() => setProfile(true)}
+            >
+              <Text className="text-text-secondary text-sm font-medium">
+                Skip for now
+              </Text>
+            </TouchableOpacity>
           </View>
 
         </View>

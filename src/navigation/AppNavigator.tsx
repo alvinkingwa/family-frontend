@@ -8,6 +8,7 @@ import MyProfileScreen from "../screens/profile/MyProfileScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 
+
 const Tab = createBottomTabNavigator<AppTabParamList>();
 
 export default function AppNavigator() {

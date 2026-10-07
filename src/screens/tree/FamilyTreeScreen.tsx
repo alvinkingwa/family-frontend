@@ -7,12 +7,11 @@ import {
   Dimensions,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { useTreeStore } from "@/store/tree.store";
-import { useFamilyStore } from "@/store/family.store";
-import { treeService } from "@/services/tree.service";
-import { LoadingSpinner, EmptyState, Avatar, Badge } from "@/components/common";
+import { useTreeStore,useFamilyStore } from "../../store";
+import { treeService } from "../../services";
+import { LoadingSpinner,EmptyState,Avatar,Badge } from "../../components/common";
 import { Household, TreeMember } from "@/types";
-import { colors } from "@/constants";
+import { colors } from "../../constants";
 
 const { width } = Dimensions.get("window");
 

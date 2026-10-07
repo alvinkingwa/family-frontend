@@ -7,13 +7,11 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useAuthStore } from "@/store/auth.store";
-import { useFamilyStore } from "@/store/family.store";
-import { useTreeStore } from "@/store/tree.store";
-import { treeService } from "@/services/tree.service";
-import { Avatar, Badge, Card, LoadingSpinner } from "@/components/common";
+import { useAuthStore,useFamilyStore,useTreeStore } from "../../store";
+import { treeService } from "../../services";
+import { Avatar,Badge,Card,LoadingSpinner } from "../../components/common";
 import { TreeMember, GhostMember } from "@/types";
-import { colors } from "@/constants";
+import { colors } from "../../constants";
 
 export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);

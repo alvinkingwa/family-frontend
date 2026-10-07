@@ -7,12 +7,11 @@ import {
   TextInput,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { useTreeStore } from "@/store/tree.store";
-import { useFamilyStore } from "@/store/family.store";
-import { treeService } from "@/services/tree.service";
-import { Avatar, Badge, EmptyState, LoadingSpinner } from "@/components/common";
+import { useTreeStore,useFamilyStore } from "../../store";
+import { treeService } from "../../services";
+import { Avatar,Badge,EmptyState,LoadingSpinner } from "../../components/common";
 import { TreeMember } from "@/types";
-import { colors } from "@/constants";
+import { colors } from "../../constants";
 
 export default function MembersListScreen() {
   const [search, setSearch] = useState("");

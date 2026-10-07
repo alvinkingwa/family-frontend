@@ -9,8 +9,7 @@ import {
 } from "@expo-google-fonts/inter";
 import * as SplashScreen from "expo-splash-screen";
 import Navigation from "./src/navigation";
-import { useAuthStore } from "./src/store";
-
+import { useAuthStore } from "./src/store/auth.store";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,7 +35,7 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <View className="flex-1 bg-background" onLayout={onLayoutRootView}>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Navigation />
     </View>
   );

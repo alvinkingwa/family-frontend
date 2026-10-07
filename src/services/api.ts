@@ -14,9 +14,12 @@ const api = axios.create({
 // request interceptor — attach JWT token to every request automatically
 api.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const token = await storage.getToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (!config.headers.Authorization) {
+      const token =
+        (await storage.getToken()) ?? (await storage.getPreFamilyToken());
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
@@ -26,12 +29,22 @@ api.interceptors.request.use(
 // response interceptor — handle errors globally
 api.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError<{ error: string }>) => {
+  async (error: AxiosError<any>) => {
     const status = error.response?.status;
-    const message = error.response?.data?.error ?? "Something went wrong";
+    const data = error.response?.data;
 
-    // 401 — token expired or invalid — clear storage and redirect to login
-    if (status === 401) {
+    let message = "Something went wrong";
+    if (typeof data === "string" && data) message = data;
+    else if (data?.error) message = data.error;
+    else if (data?.message) message = data.message;
+    else if (error.code === "ECONNABORTED")
+      message = "Request timed out. The server may be waking up, try again.";
+    else if (!error.response)
+      message = "Cannot reach the server. Check your connection.";
+
+    // 401 on a protected endpoint — token expired or invalid — clear storage.
+    // Skip /auth/* so a failed login (e.g. "Email not verified") doesn't wipe storage.
+    if (status === 401 && !error.config?.url?.startsWith("/auth/")) {
       await storage.clearAll();
       // navigation to login handled by auth store listener
     }

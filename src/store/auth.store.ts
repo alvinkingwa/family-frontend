@@ -30,15 +30,15 @@ export const useAuthStore = create<AuthState>((set) => ({
   profile: null,
 
   // called after signup or login
-  setAuthResponse: async (response: AuthResponse) => {
-    set({
-      isLoggedIn: true,
-      userId: response.user_id,
-      email: response.email,
-      emailVerified: response.email_verified,
-      hasProfile: response.has_profile,
-    });
-  },
+ setAuthResponse: async (response: AuthResponse) => {
+  set({
+    isLoggedIn: true,
+    userId: response.user_id,
+    email: response.email,
+    emailVerified: response.email_verified,
+    hasProfile: response.has_profile,
+  });
+},
 
   setProfile: (profile: UserProfile) => {
     set({ profile, hasProfile: true });
