@@ -12,11 +12,11 @@ import { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { OnboardingStackParamList } from "@/navigation/types";
-import { CreateFamilyFormData,createFamilySchema } from "../../utils";
+import { CreateFamilyFormData, createFamilySchema } from "../../utils";
 import { familyService } from "../../services";
 import { authService } from "../../services";
 import { useFamilyStore } from "../../store";
-import { Button,Input,ErrorMessage } from "../../components/common";
+import { Button, Input, ErrorMessage } from "../../components/common";
 
 type Props = NativeStackScreenProps<OnboardingStackParamList, "CreateFamily">;
 
@@ -34,34 +34,35 @@ export default function CreateFamilyScreen({ navigation }: Props) {
     defaultValues: { name: "" },
   });
 
-  const onSubmit = async (data: CreateFamilyFormData) => {
-    try {
-      setLoading(true);
-      setError("");
+ const onSubmit = async (data: CreateFamilyFormData) => {
+  try {
+    setLoading(true);
+    setError("");
 
-      // create the family
-      const res = await familyService.createFamily(data);
-      const familyId = res.family.id;
+    // create the family
+    const res = await familyService.createFamily(data);
+    console.log("createFamily res:", JSON.stringify(res));
+    const familyId = res.family.id;
 
-      // select the family to get full JWT
-      const selectRes = await authService.selectFamily(familyId);
+    // select the family to get full JWT
+    const selectRes = await authService.selectFamily(familyId);
+    console.log("selectFamily res:", JSON.stringify(selectRes));
 
-      // update store
-      await setCurrentFamily({
-        family_id: familyId,
-        family_name: data.name,
-        member_id: selectRes.member_id,
-        member_type: "adult",
-        is_admin: true,
-        household_id: res.household?.id,
-      });
-    } catch (err: any) {
-      setError(err.message ?? "Failed to create family. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+    // update store
+    await setCurrentFamily({
+      family_id: familyId,
+      family_name: data.name,
+      member_id: selectRes.member_id,
+      member_type: "adult",
+      is_admin: true,
+      household_id: res.household?.id,
+    });
+  } catch (err: any) {
+    setError(err.message ?? "Failed to create family. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <KeyboardAvoidingView
       className="flex-1 bg-background"
@@ -73,7 +74,6 @@ export default function CreateFamilyScreen({ navigation }: Props) {
         keyboardShouldPersistTaps="handled"
       >
         <View className="flex-1 px-6 pt-16 pb-8">
-
           {/* header */}
           <View className="mb-10">
             <TouchableOpacity
@@ -135,7 +135,6 @@ export default function CreateFamilyScreen({ navigation }: Props) {
             onPress={handleSubmit(onSubmit)}
             loading={loading}
           />
-
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
